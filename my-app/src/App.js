@@ -1,15 +1,13 @@
 import React, { Component } from 'react';
-import logo from './logo.svg';
 import './App.css';
+import Person from './components/person'
 
 class App extends Component {
   render() {
     return (
-      <div className="App">
-        <header className="App-header">
-          <img src={logo} className="App-logo" alt="logo" />
-          <p>Hello World</p>
-        </header>
+      <div>
+        <Person name='Nekky' age='22'></Person>
+        <Person name='NJ' age='21'></Person>
       </div>
     /* return React.createElement('div', null, 
                 React.createElement('h1',null, Hi) , 'Hello Worl'); */
