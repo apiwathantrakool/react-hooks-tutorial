@@ -11,9 +11,14 @@ class App extends Component {
           <p>Hello World</p>
         </header>
       </div>
-    /* return React.createElement('div', null, 'Hello Worl'); */
-    // JSX, React will complie the HTML code to JS code by using
+    /* return React.createElement('div', null, 
+                React.createElement('h1',null, Hi) , 'Hello Worl'); */
+  
+    // JSX compile, React will complie the HTML code to JS code by using
     // the comment code above.
+  
+    // JSX return, React will require wrapping html, because when it complie to JS.
+    // It will compile DOM to be nested JS like code above.
    );
   }
 }
