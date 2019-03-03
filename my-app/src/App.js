@@ -3,6 +3,15 @@ import './App.css';
 import Person from './components/person'
 
 class App extends Component {
+
+  state = {
+    persons: [
+      {name: 'Zaza', age: 6},
+      {name: 'Zee', age: 21},
+      {name: 'Zoe', age: 20}
+    ]
+  }
+
   render() {
     return (
       <div>
@@ -10,6 +19,10 @@ class App extends Component {
         <Person name='NJ' age='21'>
           So cute
         </Person>
+
+        <Person name= {this.state.persons[0].name} age= {this.state.persons[0].age}/>
+        <Person name= {this.state.persons[1].name} age= {this.state.persons[1].age}/>
+        <Person name= {this.state.persons[2].name} age= {this.state.persons[2].age}/>
       </div>
     /* return React.createElement('div', null, 
                 React.createElement('h1',null, Hi) , 'Hello Worl'); */
