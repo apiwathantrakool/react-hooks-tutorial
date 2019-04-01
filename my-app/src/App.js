@@ -24,6 +24,10 @@ const app = props => {
         { name: 'Zoe', age: 99 }
       ]
     })
+
+    setOtherState({
+      otherState: 'something change'
+    })
   }
 
   console.log(personsState, otherState);
