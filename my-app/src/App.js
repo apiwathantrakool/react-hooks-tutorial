@@ -1,60 +1,65 @@
-import React, { useState } from 'react';
-import './App.css';
-import Person from './components/person'
+import React, { useState } from "react";
+import "./App.css";
+import Person from "./components/person";
 
-const app = props => {
-
+const app = (props) => {
   const [personsState, setPersonsState] = useState({
     persons: [
-      { name: 'Zaza', age: 6 },
-      { name: 'Zee', age: 21 },
-      { name: 'Zoe', age: 20 }
-    ]
-  })
+      { name: "Zaza", age: 6 },
+      { name: "Zee", age: 21 },
+      { name: "Zoe", age: 20 },
+    ],
+  });
 
   const [otherState, setOtherState] = useState({
-    otherState: 'some other value'
-  })
+    otherState: "some other value",
+  });
 
   const switchNameHandler = (newName) => {
     setPersonsState({
       persons: [
         { name: newName, age: 97 },
         { name: newName, age: 98 },
-        { name: newName, age: 99 }
-      ]
-    })
-
+        { name: newName, age: 99 },
+      ],
+    });
     setOtherState({
-      otherState: 'something change'
-    })
-  }
+      otherState: "something change",
+    });
+  };
 
-  console.log(personsState, otherState);
+  const onChangeName = (event) => {
+    setPersonsState({
+      persons: [
+        { name: event.target.value, age: 97 },
+        { name: personsState.persons[1].name, age: personsState.persons[1].name },
+        { name: personsState.persons[2].name, age: personsState.persons[2].name },
+      ],
+    });
+  };
 
   return (
     <div>
-      <Person name='NJ' age='21'>
-        So cute
-      </Person>
+      <Person
+        name={personsState.persons[0].name}
+        age={personsState.persons[0].age}
+        switchNameHandler={switchNameHandler.bind(this, "Bind 1")}
+        onChangeName={onChangeName.bind(this)}
+      />
 
-      <Person 
-        name={personsState.persons[0].name} 
-        age={personsState.persons[0].age} 
-        switchNameHandler={switchNameHandler.bind(this, "Bind 1")} />
+      <Person
+        name={personsState.persons[1].name}
+        age={personsState.persons[1].age}
+        switchNameHandler={switchNameHandler.bind(this, "Bind 2")}
+      />
 
-      <Person 
-        name={personsState.persons[1].name} 
-        age={personsState.persons[1].age} 
-        switchNameHandler={switchNameHandler.bind(this, "Bind 2")} />
-
-      <Person 
-        name={personsState.persons[2].name} 
+      <Person
+        name={personsState.persons[2].name}
         age={personsState.persons[2].age}
-        switchNameHandler={()=> switchNameHandler("Arg via ()=> function")} />
-
+        switchNameHandler={() => switchNameHandler("Arg via ()=> function")}
+      />
     </div>
   );
-}
+};
 
 export default app;
