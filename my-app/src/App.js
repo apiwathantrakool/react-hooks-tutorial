@@ -31,9 +31,8 @@ const app = (props) => {
   const onChangeName = (event) => {
     setPersonsState({
       persons: [
-        { name: event.target.value, age: 97 },
-        { name: personsState.persons[1].name, age: personsState.persons[1].name },
-        { name: personsState.persons[2].name, age: personsState.persons[2].name },
+        ...personsState.persons,
+        (personsState.persons[event.target.id].name = event.target.value),
       ],
     });
   };
@@ -41,6 +40,7 @@ const app = (props) => {
   return (
     <div>
       <Person
+        index={0}
         name={personsState.persons[0].name}
         age={personsState.persons[0].age}
         switchNameHandler={switchNameHandler.bind(this, "Bind 1")}
@@ -48,15 +48,19 @@ const app = (props) => {
       />
 
       <Person
+        index={1}
         name={personsState.persons[1].name}
         age={personsState.persons[1].age}
         switchNameHandler={switchNameHandler.bind(this, "Bind 2")}
+        onChangeName={onChangeName.bind(this)}
       />
 
       <Person
+        index={2}
         name={personsState.persons[2].name}
         age={personsState.persons[2].age}
         switchNameHandler={() => switchNameHandler("Arg via ()=> function")}
+        onChangeName={onChangeName.bind(this)}
       />
     </div>
   );
