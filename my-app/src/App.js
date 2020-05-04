@@ -2,68 +2,48 @@ import React, { useState } from "react";
 import "./App.css";
 import Person from "./components/person";
 
-const app = (props) => {
+const App = (props) => {
   const [personsState, setPersonsState] = useState({
     persons: [
-      { name: "Zaza", age: 6 },
-      { name: "Zee", age: 21 },
-      { name: "Zoe", age: 20 },
+      { id: "p01", name: "Zaza", age: 6 },
+      { id: "p02", name: "Zee", age: 21 },
+      { id: "p03", name: "Zoe", age: 20 },
     ],
   });
 
-  const [otherState, setOtherState] = useState({
-    otherState: "some other value",
-  });
-
-  const switchNameHandler = (newName) => {
-    setPersonsState({
-      persons: [
-        { name: newName, age: 97 },
-        { name: newName, age: 98 },
-        { name: newName, age: 99 },
-      ],
+  const onChangeName = (event, id) => {
+    // Get target index
+    const personIndex = personsState.persons.findIndex((person) => {
+      return person.id === id;
     });
-    setOtherState({
-      otherState: "something change",
+
+    // Clone target and update new value
+    const updatedPerson = { ...personsState.persons[personIndex] };
+    updatedPerson.name = event.target.value;
+
+    // Clone entire list and update new data
+    const updatedPersonList = [...personsState.persons];
+    updatedPersonList[personIndex] = updatedPerson;
+
+    setPersonsState({
+      persons: updatedPersonList,
     });
   };
 
-  const onChangeName = (event) => {
-    setPersonsState({
-      persons: [
-        ...personsState.persons,
-        (personsState.persons[event.target.id].name = event.target.value),
-      ],
+  const renderPersonList = (personData) => {
+    return personData.map((val) => {
+      return (
+        <Person
+          key={val.id}
+          name={val.name}
+          age={val.age}
+          onChangeName={(event) => onChangeName(event, val.id)}
+        />
+      );
     });
   };
 
-  return (
-    <div>
-      <Person
-        index={0}
-        name={personsState.persons[0].name}
-        age={personsState.persons[0].age}
-        switchNameHandler={switchNameHandler.bind(this, "Bind 1")}
-        onChangeName={onChangeName.bind(this)}
-      />
-
-      <Person
-        index={1}
-        name={personsState.persons[1].name}
-        age={personsState.persons[1].age}
-        switchNameHandler={switchNameHandler.bind(this, "Bind 2")}
-        onChangeName={onChangeName.bind(this)}
-      />
-
-      <Person
-        index={2}
-        name={personsState.persons[2].name}
-        age={personsState.persons[2].age}
-        switchNameHandler={() => switchNameHandler("Arg via ()=> function")}
-        onChangeName={onChangeName.bind(this)}
-      />
-    </div>
-  );
+  return <div>{renderPersonList(personsState.persons)}</div>;
 };
 
-export default app;
+export default App;

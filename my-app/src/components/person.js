@@ -1,13 +1,14 @@
 import React from "react";
 
 const person = (props) => {
+  const { name, age, onChangeName } = props;
   return (
     <div>
-      <p onClick={props.switchNameHandler}>
-        My name is {props.name} and I am {props.age}{" "}
+      <p>
+        My name is {name} and I am {age}
       </p>
       <p>{props.children}</p>
-      <input onChange={props.onChangeName} value={props.name} id={props.index} />
+      <input onChange={onChangeName} value={name} />
     </div>
   );
 };
