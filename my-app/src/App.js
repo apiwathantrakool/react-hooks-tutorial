@@ -31,6 +31,32 @@ const App = (props) => {
     });
   };
 
+  const onClickChar = (personId, characterIndex) => {
+    // Get target index
+    const personIndex = personsState.persons.findIndex((person) => {
+      return person.id === personId;
+    });
+
+    // Clone target and update new value
+    const updatedPerson = { ...personsState.persons[personIndex] };
+    const nameCharacters = updatedPerson.name.split(
+      "",
+      updatedPerson.name.length
+    );
+    const updateNameCharacters = nameCharacters.filter((val, key) => {
+      return key !== characterIndex;
+    });
+    updatedPerson.name = updateNameCharacters.join("");
+
+    // Clone entire list and update new data
+    const updatedPersonList = [...personsState.persons];
+    updatedPersonList[personIndex] = updatedPerson;
+
+    setPersonsState({
+      persons: updatedPersonList,
+    });
+  };
+
   const renderPersonList = (personData) => {
     return personData.map((val) => {
       return (
@@ -41,16 +67,18 @@ const App = (props) => {
             age={val.age}
             onChangeName={(event) => onChangeName(event, val.id)}
           />
-          {renderCharList(val.name)}
+          {renderCharList(val.id, val.name)}
         </div>
       );
     });
   };
 
-  const renderCharList = (name) => {
+  const renderCharList = (personId, name) => {
     const nameCharacters = name.split("", name.length);
-    return nameCharacters.map((char) => {
-      return <Char character={char} />;
+    return nameCharacters.map((char, key) => {
+      return (
+        <Char character={char} onClick={() => onClickChar(personId, key)} />
+      );
     });
   };
 

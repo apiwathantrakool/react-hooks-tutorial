@@ -1,7 +1,7 @@
 import React from "react";
 
 const char = (props) => {
-  const { character } = props;
+  const { character, onClick } = props;
   return (
     <div
       style={{
@@ -12,6 +12,7 @@ const char = (props) => {
         backgroundColor: "black",
         color: "white",
       }}
+      onClick={onClick}
     >
       {character}
     </div>
