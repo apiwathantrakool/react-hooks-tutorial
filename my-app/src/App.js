@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import "./App.css";
 import Person from "./components/person";
+import Char from "./components/char";
 
 const App = (props) => {
   const [personsState, setPersonsState] = useState({
@@ -33,13 +34,23 @@ const App = (props) => {
   const renderPersonList = (personData) => {
     return personData.map((val) => {
       return (
-        <Person
-          key={val.id}
-          name={val.name}
-          age={val.age}
-          onChangeName={(event) => onChangeName(event, val.id)}
-        />
+        <div>
+          <Person
+            key={val.id}
+            name={val.name}
+            age={val.age}
+            onChangeName={(event) => onChangeName(event, val.id)}
+          />
+          {renderCharList(val.name)}
+        </div>
       );
+    });
+  };
+
+  const renderCharList = (name) => {
+    const nameCharacters = name.split("", name.length);
+    return nameCharacters.map((char) => {
+      return <Char character={char} />;
     });
   };
 
