@@ -1,4 +1,5 @@
 import React from "react";
+import Radium from "radium";
 
 const char = (props) => {
   const { character, onClick } = props;
@@ -11,6 +12,9 @@ const char = (props) => {
         paddingRight: 20,
         backgroundColor: "black",
         color: "white",
+        ":hover": {
+          backgroundColor: "red",
+        },
       }}
       onClick={onClick}
     >
@@ -19,4 +23,4 @@ const char = (props) => {
   );
 };
 
-export default char;
+export default Radium(char);
