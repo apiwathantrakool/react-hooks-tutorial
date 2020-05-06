@@ -23,4 +23,6 @@ const char = (props) => {
   );
 };
 
-export default Radium(char);
+const charRadium = Radium(char);
+
+export default charRadium;
