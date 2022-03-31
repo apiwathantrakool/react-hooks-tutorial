@@ -1,6 +1,7 @@
 import React from 'react';
 import './App.css';
-import Portal from '././components/Portal.jsx';
+import Portal from './components/Portal.jsx';
+import ControlForm from './components/ControlForm.jsx';
 
 const app = () => {
   return (
@@ -8,6 +9,7 @@ const app = () => {
       <Portal />
       <div>{'This is App screen'}</div>
       <Portal />
+      <ControlForm />
     </div>
   );
 };
