@@ -1,30 +1,30 @@
-import React from "react";
-import "./person.css";
+import React from 'react';
+import styles from './person.module.css';
 
 const person = (props) => {
   const { name, age, onChangeName } = props;
-  const txtStyleClasses = getTxtStyleClasses(name);
+  const txtStyle = getTxtStyleClasses(name);
   return (
     <div>
-      <p className={txtStyleClasses}>
+      <p className={txtStyle}>
         My name is {name} and I am {age}
       </p>
       <p>{props.children}</p>
-      <input onChange={onChangeName} value={name} />
+      <input
+        className={styles[`text-bold`]}
+        onChange={onChangeName}
+        value={name}
+      />
     </div>
   );
 };
 
 const getTxtStyleClasses = (name) => {
-  const txtStyle = [];
-  if (name.length >= 5) {
-    txtStyle.push("text-bold");
-  }
-  if (name.length >= 10) {
-    txtStyle.push("background-red");
-  }
-  // className="text-bold background-red"
-  return txtStyle.join(" ");
+  const isBold = name.length >= 5;
+  const isBgRed = name.length >= 10;
+  return `${isBold ? styles['text-bold'] : ''} ${
+    isBgRed ? styles['background-red'] : ''
+  }`;
 };
 
 export default person;
