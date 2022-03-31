@@ -1,69 +1,41 @@
-import React, { useState } from "react";
-import "./App.css";
-import Person from "./components/person";
+import React, { useState, useEffect } from 'react';
 
-const app = (props) => {
-  const [personsState, setPersonsState] = useState({
-    persons: [
-      { name: "Zaza", age: 6 },
-      { name: "Zee", age: 21 },
-      { name: "Zoe", age: 20 },
-    ],
-  });
+import Login from './components/Login/Login';
+import Home from './components/Home/Home';
+import MainHeader from './components/MainHeader/MainHeader';
 
-  const [otherState, setOtherState] = useState({
-    otherState: "some other value",
-  });
+function App() {
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
 
-  const switchNameHandler = (newName) => {
-    setPersonsState({
-      persons: [
-        { name: newName, age: 97 },
-        { name: newName, age: 98 },
-        { name: newName, age: 99 },
-      ],
-    });
-    setOtherState({
-      otherState: "something change",
-    });
+  useEffect(() => {
+    const storedUserLoggedInInformation = localStorage.getItem('isLoggedIn');
+
+    if (storedUserLoggedInInformation === '1') {
+      setIsLoggedIn(true);
+    }
+  }, []);
+
+  const loginHandler = (email, password) => {
+    // We should of course check email and password
+    // But it's just a dummy/ demo anyways
+    localStorage.setItem('isLoggedIn', '1');
+    setIsLoggedIn(true);
   };
 
-  const onChangeName = (event) => {
-    setPersonsState({
-      persons: [
-        ...personsState.persons,
-        (personsState.persons[event.target.id].name = event.target.value),
-      ],
-    });
+  const logoutHandler = () => {
+    localStorage.removeItem('isLoggedIn');
+    setIsLoggedIn(false);
   };
 
   return (
-    <div>
-      <Person
-        index={0}
-        name={personsState.persons[0].name}
-        age={personsState.persons[0].age}
-        switchNameHandler={switchNameHandler.bind(this, "Bind 1")}
-        onChangeName={onChangeName.bind(this)}
-      />
-
-      <Person
-        index={1}
-        name={personsState.persons[1].name}
-        age={personsState.persons[1].age}
-        switchNameHandler={switchNameHandler.bind(this, "Bind 2")}
-        onChangeName={onChangeName.bind(this)}
-      />
-
-      <Person
-        index={2}
-        name={personsState.persons[2].name}
-        age={personsState.persons[2].age}
-        switchNameHandler={() => switchNameHandler("Arg via ()=> function")}
-        onChangeName={onChangeName.bind(this)}
-      />
-    </div>
+    <React.Fragment>
+      <MainHeader isAuthenticated={isLoggedIn} onLogout={logoutHandler} />
+      <main>
+        {!isLoggedIn && <Login onLogin={loginHandler} />}
+        {isLoggedIn && <Home onLogout={logoutHandler} />}
+      </main>
+    </React.Fragment>
   );
-};
+}
 
-export default app;
+export default App;
