@@ -1,69 +1,33 @@
-import React, { useState } from "react";
-import "./App.css";
-import Person from "./components/person";
+import React, { useState, useCallback } from 'react';
 
-const app = (props) => {
-  const [personsState, setPersonsState] = useState({
-    persons: [
-      { name: "Zaza", age: 6 },
-      { name: "Zee", age: 21 },
-      { name: "Zoe", age: 20 },
-    ],
-  });
+import Button from './components/UI/Button/Button';
+import DemoOutput from './components/Demo/DemoOutput';
+import './App.css';
 
-  const [otherState, setOtherState] = useState({
-    otherState: "some other value",
-  });
+function App() {
+  const [showParagraph, setShowParagraph] = useState(false);
+  const [allowToggle, setAllowToggle] = useState(false);
 
-  const switchNameHandler = (newName) => {
-    setPersonsState({
-      persons: [
-        { name: newName, age: 97 },
-        { name: newName, age: 98 },
-        { name: newName, age: 99 },
-      ],
-    });
-    setOtherState({
-      otherState: "something change",
-    });
-  };
+  console.log('APP RUNNING');
 
-  const onChangeName = (event) => {
-    setPersonsState({
-      persons: [
-        ...personsState.persons,
-        (personsState.persons[event.target.id].name = event.target.value),
-      ],
-    });
+  const toggleParagraphHandler = useCallback(() => {
+    if (allowToggle) {
+      setShowParagraph((prevShowParagraph) => !prevShowParagraph);
+    }
+  }, [allowToggle]);
+
+  const allowToggleHandler = () => {
+    setAllowToggle(true);
   };
 
   return (
-    <div>
-      <Person
-        index={0}
-        name={personsState.persons[0].name}
-        age={personsState.persons[0].age}
-        switchNameHandler={switchNameHandler.bind(this, "Bind 1")}
-        onChangeName={onChangeName.bind(this)}
-      />
-
-      <Person
-        index={1}
-        name={personsState.persons[1].name}
-        age={personsState.persons[1].age}
-        switchNameHandler={switchNameHandler.bind(this, "Bind 2")}
-        onChangeName={onChangeName.bind(this)}
-      />
-
-      <Person
-        index={2}
-        name={personsState.persons[2].name}
-        age={personsState.persons[2].age}
-        switchNameHandler={() => switchNameHandler("Arg via ()=> function")}
-        onChangeName={onChangeName.bind(this)}
-      />
+    <div className="app">
+      <h1>Hi there!</h1>
+      <DemoOutput show={showParagraph} />
+      <Button onClick={allowToggleHandler}>Allow Toggling</Button>
+      <Button onClick={toggleParagraphHandler}>Toggle Paragraph!</Button>
     </div>
   );
-};
+}
 
-export default app;
+export default App;
